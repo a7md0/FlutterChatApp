@@ -24,6 +24,9 @@ class _NewMessageState extends State<NewMessage> {
                 labelText: 'Send a message...',
               ),
               controller: _controller,
+              textCapitalization: TextCapitalization.sentences,
+              autocorrect: true,
+              enableSuggestions: true,
               onChanged: (value) {
                 setState(() => _enteredMessage = value);
               },
