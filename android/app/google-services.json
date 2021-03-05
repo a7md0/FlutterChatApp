@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "305685646276",
+    "project_id": "fluttershopapp-be802",
+    "storage_bucket": "fluttershopapp-be802.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305685646276:android:6a5413b9e72ec73dadb291",
+        "android_client_info": {
+          "package_name": "dev.a7md0.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305685646276-c5ro8ph5uitrarjusfk072cpu8q1s9qt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2dKi7ZH8yoBYC4WDwJMR85naa0LiPClY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "305685646276-c5ro8ph5uitrarjusfk072cpu8q1s9qt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
