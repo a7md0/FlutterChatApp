@@ -36,6 +36,7 @@ class Messages extends StatelessWidget {
               reverse: true,
               itemCount: documents.length,
               itemBuilder: (ctx, idx) => MessageBubble(
+                key: ValueKey(documents[idx].documentID),
                 message: documents[idx]['text'],
                 isMe: documents[idx]['userId'] == futureSnapshot.data.uid,
               ),
