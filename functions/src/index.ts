@@ -18,7 +18,7 @@ exports.notificationFunction = functions.firestore
 
       return admin.messaging().sendToTopic("chat", {
         notification: {
-          title: data.username,
+          title: data.userName,
           body: data.text,
           clickAction: "FLUTTER_NOTIFICATION_CLICK",
         },
