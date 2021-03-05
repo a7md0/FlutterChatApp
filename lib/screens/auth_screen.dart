@@ -19,7 +19,7 @@ class _AuthScreenState extends State<AuthScreen> {
   void _submitAuthForm({
     String email,
     String password,
-    String username,
+    String userName,
     bool isLogin,
   }) {}
 }
