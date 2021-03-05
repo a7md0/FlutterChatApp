@@ -26,6 +26,8 @@ class _ChatScreenState extends State<ChatScreen> {
       print(message);
       return;
     });
+
+    FirebaseMessaging.instance.subscribeToTopic('chat');
   }
 
   @override
