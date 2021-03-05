@@ -5,12 +5,14 @@ class MessageBubble extends StatelessWidget {
   final Key key;
 
   final String userId;
+  final String userName;
   final String message;
   final bool isMe;
 
   MessageBubble({
     this.key,
     this.userId,
+    this.userName,
     this.message,
     this.isMe,
   });
@@ -36,21 +38,12 @@ class MessageBubble extends StatelessWidget {
           child: Column(
             crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: [
-              FutureBuilder(
-                future: Firestore.instance.collection('users').document(userId).get(),
-                builder: (ctx, userSnapshot) {
-                  if (userSnapshot.connectionState == ConnectionState.waiting) {
-                    return Text('Loading...');
-                  }
-
-                  return Text(
-                    userSnapshot.data['username'],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: isMe ? Colors.black : Theme.of(context).accentTextTheme.headline6.color,
-                    ),
-                  );
-                },
+              Text(
+                userName,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: isMe ? Colors.black : Theme.of(context).accentTextTheme.headline6.color,
+                ),
               ),
               Text(
                 message,
