@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:chat_app/widgets/auth/auth_form.dart';
@@ -33,7 +34,7 @@ class _AuthScreenState extends State<AuthScreen> {
     BuildContext ctx,
     File userImage,
   }) async {
-    AuthResult authResult;
+    UserCredential authResult;
     setState(() => isLoading = true);
 
     try {
@@ -49,19 +50,17 @@ class _AuthScreenState extends State<AuthScreen> {
         );
 
         final ref = FirebaseStorage.instance.ref().child('user_images').child('${authResult.user.uid}.jpg');
-        await ref.putFile(userImage).onComplete;
+        await ref.putFile(userImage);
 
         final avatarUrl = await ref.getDownloadURL();
+        final user = _auth.currentUser;
 
-        await _auth.currentUser().then((user) {
-          UserUpdateInfo userUpdateInfo = UserUpdateInfo();
-          userUpdateInfo.displayName = userName;
-          userUpdateInfo.photoUrl = avatarUrl;
+        await user.updateProfile(
+          displayName: userName,
+          photoURL: avatarUrl,
+        );
 
-          return user.updateProfile(userUpdateInfo);
-        });
-
-        await Firestore.instance.collection('users').document(authResult.user.uid).setData({
+        await FirebaseFirestore.instance.collection('users').doc(authResult.user.uid).set({
           'username': userName,
           'email': email,
           'image_url': avatarUrl,
