@@ -15,7 +15,7 @@ class Messages extends StatelessWidget {
           );
         }
 
-        return StreamBuilder(
+        return StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('chat')
               .orderBy(
@@ -30,7 +30,7 @@ class Messages extends StatelessWidget {
               );
             }
 
-            final documents = chatSnapshot.data.documents as List<DocumentSnapshot>;
+            final documents = chatSnapshot.data.docs;
 
             return ListView.builder(
               reverse: true,
