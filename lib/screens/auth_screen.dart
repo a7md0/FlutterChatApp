@@ -40,6 +40,12 @@ class _AuthScreenState extends State<AuthScreen> {
           email: email,
           password: password,
         );
+        await _auth.currentUser().then((user) {
+          UserUpdateInfo userUpdateInfo = UserUpdateInfo();
+          userUpdateInfo.displayName = userName;
+
+          return user.updateProfile(userUpdateInfo);
+        });
       }
     } on PlatformException catch (err) {
       var message = 'An error occurred, please check your credentials';
