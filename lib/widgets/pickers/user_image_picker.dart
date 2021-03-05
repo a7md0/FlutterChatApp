@@ -17,6 +17,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
       children: [
         CircleAvatar(
           radius: 40,
+          backgroundColor: Colors.grey,
           backgroundImage: _pickedImage != null ? FileImage(_pickedImage) : null,
         ),
         TextButton.icon(
