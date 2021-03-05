@@ -34,6 +34,7 @@ class MessageBubble extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
           child: Column(
+            crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: [
               FutureBuilder(
                 future: Firestore.instance.collection('users').document(userId).get(),
@@ -44,12 +45,16 @@ class MessageBubble extends StatelessWidget {
 
                   return Text(
                     userSnapshot.data['username'],
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: isMe ? Colors.black : Theme.of(context).accentTextTheme.headline6.color,
+                    ),
                   );
                 },
               ),
               Text(
                 message,
+                textAlign: isMe ? TextAlign.end : TextAlign.start,
                 style: TextStyle(
                   color: isMe ? Colors.black : Theme.of(context).accentTextTheme.headline6.color,
                 ),
