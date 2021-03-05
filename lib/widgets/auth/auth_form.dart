@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chat_app/widgets/pickers/user_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,6 +32,7 @@ class _AuthFormState extends State<AuthForm> {
   String _userEmail = "";
   String _userName = "";
   String _userPassword = "";
+  File _userImageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,10 @@ class _AuthFormState extends State<AuthForm> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (!_isLogin) UserImagePicker(),
+                  if (!_isLogin)
+                    UserImagePicker(
+                      imagePicked: _imagePicked,
+                    ),
                   TextFormField(
                     key: ValueKey('email'),
                     keyboardType: TextInputType.emailAddress,
@@ -119,6 +125,16 @@ class _AuthFormState extends State<AuthForm> {
 
     FocusScope.of(context).unfocus(); // Close keyboard (remove focus from any input)
 
+    if (_userImageFile == null && !_isLogin) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please pick an image first.'),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+      return;
+    }
+
     if (isValid) {
       _formKey.currentState.save();
 
@@ -130,5 +146,9 @@ class _AuthFormState extends State<AuthForm> {
         ctx: context,
       );
     }
+  }
+
+  void _imagePicked(File image) {
+    _userImageFile = image;
   }
 }
