@@ -9,9 +9,11 @@ class AuthForm extends StatefulWidget {
     bool isLogin,
     BuildContext ctx,
   }) onSubmit;
+  final bool isLoading;
 
   const AuthForm({
     Key key,
+    this.isLoading,
     this.onSubmit,
   }) : super(key: key);
 
@@ -88,16 +90,19 @@ class _AuthFormState extends State<AuthForm> {
                     onSaved: (value) => _userPassword = value,
                   ),
                   SizedBox(height: 12),
-                  RaisedButton(
-                    child: Text(_isLogin ? 'Login' : 'Signup'),
-                    onPressed: _trySubmit,
-                  ),
-                  TextButton(
-                    child: Text(_isLogin ? 'Create new account' : 'I already have an account'),
-                    onPressed: () {
-                      setState(() => _isLogin = !_isLogin);
-                    },
-                  ),
+                  if (widget.isLoading) CircularProgressIndicator(),
+                  if (!widget.isLoading)
+                    RaisedButton(
+                      child: Text(_isLogin ? 'Login' : 'Signup'),
+                      onPressed: _trySubmit,
+                    ),
+                  if (!widget.isLoading)
+                    TextButton(
+                      child: Text(_isLogin ? 'Create new account' : 'I already have an account'),
+                      onPressed: () {
+                        setState(() => _isLogin = !_isLogin);
+                      },
+                    ),
                 ],
               ),
             ),

@@ -12,12 +12,13 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: AuthForm(onSubmit: _submitAuthForm),
+      body: AuthForm(isLoading: isLoading, onSubmit: _submitAuthForm),
     );
   }
 
@@ -29,6 +30,7 @@ class _AuthScreenState extends State<AuthScreen> {
     BuildContext ctx,
   }) async {
     AuthResult authResult;
+    setState(() => isLoading = true);
 
     try {
       if (isLogin) {
@@ -68,6 +70,8 @@ class _AuthScreenState extends State<AuthScreen> {
       );
     } catch (err) {
       print(err);
+    } finally {
+      setState(() => isLoading = false);
     }
   }
 }
