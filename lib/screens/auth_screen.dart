@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -20,7 +21,7 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
-  void _submitAuthForm({
+  Future<void> _submitAuthForm({
     String email,
     String password,
     String userName,
@@ -45,6 +46,11 @@ class _AuthScreenState extends State<AuthScreen> {
           userUpdateInfo.displayName = userName;
 
           return user.updateProfile(userUpdateInfo);
+        });
+
+        await Firestore.instance.collection('users').document(authResult.user.uid).setData({
+          'username': userName,
+          'email': email,
         });
       }
     } on PlatformException catch (err) {

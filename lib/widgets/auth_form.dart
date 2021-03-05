@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AuthForm extends StatefulWidget {
-  final void Function({
+  final Future<void> Function({
     String email,
     String password,
     String userName,
