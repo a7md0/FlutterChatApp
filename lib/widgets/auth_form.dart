@@ -42,7 +42,7 @@ class _AuthFormState extends State<AuthForm> {
                     ),
                   ),
                   SizedBox(height: 12),
-                  ElevatedButton(
+                  RaisedButton(
                     child: Text('Login'),
                     onPressed: () {},
                   ),
