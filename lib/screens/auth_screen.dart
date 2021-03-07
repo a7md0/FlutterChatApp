@@ -26,12 +26,12 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   Future<void> _submitAuthForm({
-    String email,
-    String password,
-    String userName,
-    bool isLogin,
-    BuildContext ctx,
-    File userImage,
+    required String email,
+    required String password,
+    required String userName,
+    required bool isLogin,
+    required BuildContext ctx,
+    required File userImage,
   }) async {
     UserCredential authResult;
     setState(() => isLoading = true);
@@ -48,18 +48,18 @@ class _AuthScreenState extends State<AuthScreen> {
           password: password,
         );
 
-        final ref = FirebaseStorage.instance.ref().child('user_images').child('${authResult.user.uid}.jpg');
+        final ref = FirebaseStorage.instance.ref().child('user_images').child('${authResult.user!.uid}.jpg');
         await ref.putFile(userImage);
 
         final avatarUrl = await ref.getDownloadURL();
         final user = _auth.currentUser;
 
-        await user.updateProfile(
+        await user?.updateProfile(
           displayName: userName,
           photoURL: avatarUrl,
         );
 
-        await FirebaseFirestore.instance.collection('users').doc(authResult.user.uid).set({
+        await FirebaseFirestore.instance.collection('users').doc(authResult.user!.uid).set({
           'username': userName,
           'email': email,
           'image_url': avatarUrl,
@@ -69,7 +69,7 @@ class _AuthScreenState extends State<AuthScreen> {
       var message = 'An error occurred, please check your credentials';
 
       if (err.message != null) {
-        message = err.message;
+        message = err.message!;
       }
 
       Scaffold.of(ctx).showSnackBar(

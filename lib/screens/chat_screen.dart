@@ -22,7 +22,7 @@ class _ChatScreenState extends State<ChatScreen> {
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       print(event);
     });
-    FirebaseMessaging.onBackgroundMessage((message) {
+    FirebaseMessaging.onBackgroundMessage((message) async {
       print(message);
       return;
     });

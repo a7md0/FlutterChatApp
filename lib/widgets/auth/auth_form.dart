@@ -6,19 +6,19 @@ import 'package:flutter/services.dart';
 
 class AuthForm extends StatefulWidget {
   final Future<void> Function({
-    String email,
-    String password,
-    String userName,
-    bool isLogin,
-    BuildContext ctx,
-    File userImage,
+    required String email,
+    required String password,
+    required String userName,
+    required bool isLogin,
+    required BuildContext ctx,
+    required File userImage,
   }) onSubmit;
   final bool isLoading;
 
   const AuthForm({
-    Key key,
-    this.isLoading,
-    this.onSubmit,
+    Key? key,
+    required this.isLoading,
+    required this.onSubmit,
   }) : super(key: key);
 
   @override
@@ -30,10 +30,10 @@ class _AuthFormState extends State<AuthForm> {
 
   bool _isLogin = true;
 
-  String _userEmail = "";
-  String _userName = "";
-  String _userPassword = "";
-  File _userImageFile;
+  String? _userEmail = "";
+  String? _userName = "";
+  String? _userPassword = "";
+  File? _userImageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class _AuthFormState extends State<AuthForm> {
                       labelText: 'Email address',
                     ),
                     validator: (value) {
-                      if (value.isEmpty || !value.contains('@')) {
+                      if (value == null || value.isEmpty || !value.contains('@')) {
                         return 'Please enter a valid email address.';
                       }
 
@@ -74,7 +74,7 @@ class _AuthFormState extends State<AuthForm> {
                         labelText: 'Username',
                       ),
                       validator: (value) {
-                        if (value.isEmpty || value.length < 4) {
+                        if (value == null || value.isEmpty || value.length < 4) {
                           return 'Please enter at least 4 character';
                         }
 
@@ -90,7 +90,7 @@ class _AuthFormState extends State<AuthForm> {
                       labelText: 'Password',
                     ),
                     validator: (value) {
-                      if (value.isEmpty || value.length < 7) {
+                      if (value == null || value.isEmpty || value.length < 7) {
                         return 'Password must be at least 7 characters long';
                       }
 
@@ -122,7 +122,7 @@ class _AuthFormState extends State<AuthForm> {
   }
 
   void _trySubmit() {
-    final isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState?.validate() ?? false;
 
     FocusScope.of(context).unfocus(); // Close keyboard (remove focus from any input)
 
@@ -137,15 +137,15 @@ class _AuthFormState extends State<AuthForm> {
     }
 
     if (isValid) {
-      _formKey.currentState.save();
+      _formKey.currentState?.save();
 
       widget.onSubmit(
-        email: _userEmail.trim(),
-        userName: _userName.trim(),
-        password: _userPassword.trim(),
+        email: _userEmail?.trim() ?? '',
+        userName: _userName?.trim() ?? '',
+        password: _userPassword?.trim() ?? '',
         isLogin: _isLogin,
         ctx: context,
-        userImage: _userImageFile,
+        userImage: _userImageFile!,
       );
     }
   }

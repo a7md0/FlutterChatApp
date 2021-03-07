@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Messages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<User>(
       future: Future.value(FirebaseAuth.instance.currentUser),
       builder: (ctx, futureSnapshot) {
         if (futureSnapshot.connectionState == ConnectionState.waiting) {
@@ -30,7 +30,7 @@ class Messages extends StatelessWidget {
               );
             }
 
-            final documents = chatSnapshot.data.docs;
+            final documents = chatSnapshot.data?.docs ?? [];
 
             return ListView.builder(
               reverse: true,
@@ -40,7 +40,7 @@ class Messages extends StatelessWidget {
                 userName: documents[idx]['userName'],
                 userAvatar: documents[idx]['userAvatar'],
                 message: documents[idx]['text'],
-                isMe: documents[idx]['userId'] == futureSnapshot.data.uid,
+                isMe: documents[idx]['userId'] == (futureSnapshot.data?.uid ?? ''),
               ),
             );
           },
