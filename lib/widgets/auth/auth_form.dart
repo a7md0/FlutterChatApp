@@ -127,7 +127,7 @@ class _AuthFormState extends State<AuthForm> {
     FocusScope.of(context).unfocus(); // Close keyboard (remove focus from any input)
 
     if (_userImageFile == null && !_isLogin) {
-      Scaffold.of(context).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Please pick an image first.'),
           backgroundColor: Theme.of(context).errorColor,
